@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { convertDesign } from "@/lib/analysis/convert";
 import { parseDataUrl } from "@/lib/image";
+import { persistAnalysis, uploadDesignImage } from "@/lib/supabase";
 import type { ConvertOutputMode } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -36,6 +37,13 @@ export async function POST(request: Request) {
       : "standard";
 
     const result = await convertDesign(parsed.base64, parsed.mimeType, mode);
+    void uploadDesignImage(parsed.base64, parsed.mimeType);
+    void persistAnalysis({
+      kind: "convert",
+      provider: result.modelProvider,
+      usedAi: result.usedAi,
+      payload: { mode: result.mode, buildConfidence: result.buildConfidence },
+    });
     return NextResponse.json(result);
   } catch {
     return NextResponse.json(

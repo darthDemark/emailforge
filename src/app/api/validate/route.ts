@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { validateHtml } from "@/lib/analysis/validate";
+import { persistAnalysis } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -24,6 +25,12 @@ export async function POST(request: Request) {
     }
 
     const result = await validateHtml(html);
+    void persistAnalysis({
+      kind: "validate",
+      provider: result.modelProvider,
+      usedAi: result.usedAi,
+      payload: result.summary,
+    });
     return NextResponse.json(result);
   } catch {
     return NextResponse.json(

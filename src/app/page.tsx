@@ -9,6 +9,10 @@ import { ruleCount } from "@/lib/rule-engine";
 import { isAiAvailable, listProviderStatus } from "@/lib/ai";
 import { ALL_CATEGORIES, CATEGORY_LABELS } from "@/lib/types";
 
+// Read AI provider availability at request time so the status badge reflects
+// runtime environment variables (e.g. Vercel secrets) rather than build-time.
+export const dynamic = "force-dynamic";
+
 export default function HomePage() {
   const rules = ruleCount();
   const aiReady = isAiAvailable();

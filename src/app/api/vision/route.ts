@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { analyzeDesign } from "@/lib/analysis/vision";
 import { parseDataUrl } from "@/lib/image";
+import { persistAnalysis, uploadDesignImage } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -25,6 +26,13 @@ export async function POST(request: Request) {
     }
 
     const result = await analyzeDesign(parsed.base64, parsed.mimeType);
+    void uploadDesignImage(parsed.base64, parsed.mimeType);
+    void persistAnalysis({
+      kind: "vision",
+      provider: result.modelProvider,
+      usedAi: result.usedAi,
+      payload: { components: result.components, summary: result.summary },
+    });
     return NextResponse.json(result);
   } catch {
     return NextResponse.json(

@@ -1,5 +1,5 @@
 import type { Rule } from "@/lib/rule-engine/types";
-import { byTag, snippet } from "@/lib/rule-engine/helpers";
+import { byTag } from "@/lib/rule-engine/helpers";
 
 export const gmailRules: Rule[] = [
   {
