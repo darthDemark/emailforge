@@ -181,7 +181,7 @@ export default function ConvertPage() {
       {result ? (
         <div className="space-y-8">
           <div className="grid gap-6 lg:grid-cols-[auto_1fr]">
-            <Card className="flex items-center justify-center p-6">
+            <Card className="flex items-center justify-center border-brand/25 bg-brand-muted/60 p-6">
               <ScoreCard
                 label="Build confidence"
                 score={result.buildConfidence}
@@ -189,10 +189,12 @@ export default function ConvertPage() {
               />
             </Card>
 
-            <Card>
+            <Card className="border-brand/25 bg-brand-muted/60">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5" aria-hidden="true" />
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-brand-foreground">
+                    <Sparkles className="h-4 w-4" aria-hidden="true" />
+                  </span>
                   Optimizations applied
                 </CardTitle>
               </CardHeader>

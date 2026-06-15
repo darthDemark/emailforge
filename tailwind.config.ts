@@ -17,15 +17,26 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+        sans: [
+          '"IBM Plex Sans"',
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "sans-serif",
+        ],
+        mono: [
+          '"IBM Plex Mono"',
+          "ui-monospace",
+          "SFMono-Regular",
+          "monospace",
+        ],
       },
       fontSize: {
         "page-title": ["48px", { lineHeight: "1.1", fontWeight: "700" }],
         headline: ["24px", { lineHeight: "1.3", fontWeight: "700" }],
         "semi-header": ["18px", { lineHeight: "1.4", fontWeight: "600" }],
         "issue-title": ["16px", { lineHeight: "1.5", fontWeight: "700" }],
-        body: ["14px", { lineHeight: "1.6", fontWeight: "400" }],
+        body: ["16px", { lineHeight: "1.6", fontWeight: "400" }],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -65,6 +76,12 @@ const config: Config = {
         warning: "hsl(var(--warning))",
         recommendation: "hsl(var(--recommendation))",
         success: "hsl(var(--success))",
+        brand: {
+          DEFAULT: "hsl(var(--brand))",
+          foreground: "hsl(var(--brand-foreground))",
+          muted: "hsl(var(--brand-muted))",
+          subtle: "hsl(var(--brand-subtle))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

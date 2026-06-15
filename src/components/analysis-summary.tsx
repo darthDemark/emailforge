@@ -1,4 +1,4 @@
-import { AlertOctagon, AlertTriangle, Lightbulb } from "lucide-react";
+import { AlertOctagon, AlertTriangle, Lightbulb, Sparkles } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -6,6 +6,7 @@ import {
   type AnalysisSummary as Summary,
 } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { ScoreCard } from "@/components/score-card";
 import { Progress } from "@/components/ui/progress";
 
@@ -50,9 +51,17 @@ export function AnalysisSummary({
     .sort((a, b) => a.score - b.score);
 
   return (
-    <Card>
+    <Card className="border-brand/25 bg-brand-muted/60">
       <CardHeader>
-        <CardTitle>Analysis summary</CardTitle>
+        <div className="flex flex-wrap items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-brand-foreground">
+              <Sparkles className="h-4 w-4" aria-hidden="true" />
+            </span>
+            Analysis summary
+          </CardTitle>
+          {usedAi ? <Badge variant="brand">AI-enhanced</Badge> : null}
+        </div>
         {provider ? (
           <p className="text-body text-muted-foreground">
             {usedAi

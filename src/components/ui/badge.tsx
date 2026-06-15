@@ -16,6 +16,7 @@ const badgeVariants = cva(
         recommendation:
           "border-transparent bg-recommendation/10 text-recommendation",
         success: "border-transparent bg-success/10 text-success",
+        brand: "border-transparent bg-brand/10 text-brand",
       },
     },
     defaultVariants: {

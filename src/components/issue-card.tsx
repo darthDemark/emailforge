@@ -61,14 +61,17 @@ export function IssueCard({
             <Badge variant="secondary" className="gap-1">
               {formatPercent(issue.confidence)} confidence
             </Badge>
-            <Badge variant="outline" className="gap-1 text-muted-foreground">
-              {issue.source === "ai" ? (
+            {issue.source === "ai" ? (
+              <Badge variant="brand" className="gap-1">
                 <Sparkles className="h-3 w-3" aria-hidden="true" />
-              ) : (
+                AI
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="gap-1 text-muted-foreground">
                 <Cpu className="h-3 w-3" aria-hidden="true" />
-              )}
-              {issue.source === "ai" ? "AI" : "Rule Engine"}
-            </Badge>
+                Rule Engine
+              </Badge>
+            )}
           </div>
           <p className="text-issue-title font-bold leading-snug">
             {issue.severity === "critical"

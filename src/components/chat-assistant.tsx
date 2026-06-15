@@ -83,7 +83,7 @@ export function ChatAssistant() {
       <Button
         onClick={() => setOpen((v) => !v)}
         size="lg"
-        className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg"
+        className="fixed bottom-6 right-6 z-50 rounded-full bg-brand text-brand-foreground shadow-lg hover:bg-brand/90"
         aria-label={open ? "Close EmailForge assistant" : "Open EmailForge assistant"}
         aria-expanded={open}
       >
@@ -105,11 +105,13 @@ export function ChatAssistant() {
       >
         <header className="flex items-center justify-between border-b border-border p-4">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-brand-foreground">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
             </span>
             <div>
-              <p className="text-semi-header leading-tight">Ask EmailForge</p>
+              <p className="text-semi-header font-semibold leading-tight text-brand">
+                Ask EmailForge
+              </p>
               <p className="text-xs text-muted-foreground">
                 {context.page
                   ? `Context: ${context.page} analysis`

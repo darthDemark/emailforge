@@ -37,6 +37,12 @@
     --recommendation: 217 91% 60%;
     --success: 142 71% 45%;
 
+    /* Brand accent — #ea6133 */
+    --brand: 15 81% 56%;
+    --brand-foreground: 0 0% 100%;
+    --brand-muted: 16 100% 97%;
+    --brand-subtle: 16 90% 90%;
+
     --radius: 0.75rem;
   }
 
@@ -73,6 +79,12 @@
     --warning: 38 92% 55%;
     --recommendation: 217 91% 65%;
     --success: 142 71% 50%;
+
+    /* Brand accent — slightly brighter for dark surfaces */
+    --brand: 15 88% 60%;
+    --brand-foreground: 0 0% 100%;
+    --brand-muted: 16 40% 13%;
+    --brand-subtle: 16 45% 22%;
   }
 }
 
@@ -83,14 +95,21 @@
 
   body {
     @apply bg-background text-foreground;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    @apply bg-foreground/10;
+    @apply bg-brand/15;
+  }
+
+  /* Headers use the brand color (#ea6133) per brand guidelines. */
+  h1,
+  h2,
+  h3 {
+    color: hsl(var(--brand));
   }
 }
 

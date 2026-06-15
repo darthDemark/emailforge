@@ -142,19 +142,21 @@ export default function VisionPage() {
       {result ? (
         <div className="space-y-8">
           {result.components.length > 0 ? (
-            <Card>
+            <Card className="border-brand/25 bg-brand-muted/60">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Layers className="h-5 w-5" aria-hidden="true" />
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-brand-foreground">
+                    <Layers className="h-4 w-4" aria-hidden="true" />
+                  </span>
                   Detected components
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {result.components.map((c, i) => (
-                    <Badge key={`${c.type}-${i}`} variant="secondary" className="gap-1.5">
+                    <Badge key={`${c.type}-${i}`} variant="brand" className="gap-1.5">
                       {c.label}
-                      <span className="text-muted-foreground">
+                      <span className="opacity-70">
                         {formatPercent(c.confidence)}
                       </span>
                     </Badge>
