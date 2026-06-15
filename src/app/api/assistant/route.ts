@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { askAssistant } from "@/lib/analysis/assistant";
 import type { AssistantContext, ChatMessage } from "@/lib/types";
+import { describeError, redactSecrets } from "@/lib/errors";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -30,11 +31,12 @@ export async function POST(request: Request) {
 
     const result = await askAssistant(messages, body.context);
     return NextResponse.json(result);
-  } catch {
+  } catch (err) {
+    const detail = redactSecrets(describeError(err));
+    console.error("[api/assistant] chat failed:", detail);
     return NextResponse.json(
       {
-        reply:
-          "The assistant encountered an error. Please verify your AI provider configuration and try again.",
+        reply: `The assistant encountered an error from the AI provider:\n\n${detail}\n\nThis usually means the API key is invalid/revoked or the configured model name is not available to your account.`,
         usedAi: false,
         provider: "None",
       },

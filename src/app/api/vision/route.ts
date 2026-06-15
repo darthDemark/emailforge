@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { analyzeDesign } from "@/lib/analysis/vision";
 import { parseDataUrl } from "@/lib/image";
 import { persistAnalysis, uploadDesignImage } from "@/lib/supabase";
+import { describeError, redactSecrets } from "@/lib/errors";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -34,9 +35,11 @@ export async function POST(request: Request) {
       payload: { components: result.components, summary: result.summary },
     });
     return NextResponse.json(result);
-  } catch {
+  } catch (err) {
+    const detail = redactSecrets(describeError(err));
+    console.error("[api/vision] analysis failed:", detail);
     return NextResponse.json(
-      { error: "Failed to analyze design." },
+      { error: `Failed to analyze design: ${detail}` },
       { status: 500 },
     );
   }

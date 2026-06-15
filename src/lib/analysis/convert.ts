@@ -138,7 +138,8 @@ Respond with STRICT JSON only:
       modelProvider: provider.label,
       usedAi: true,
     };
-  } catch {
+  } catch (err) {
+    console.error("[convert] AI generation failed, using template fallback:", err);
     const html = buildStarterEmail(mode);
     return {
       html,

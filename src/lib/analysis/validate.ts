@@ -55,7 +55,8 @@ ${truncate(html, 16000)}`;
       modelProvider: provider.label,
       usedAi: true,
     };
-  } catch {
+  } catch (err) {
+    console.error("[validate] AI expansion failed, using rule engine only:", err);
     return {
       issues: ruleIssues,
       summary: summarize(ruleIssues),
