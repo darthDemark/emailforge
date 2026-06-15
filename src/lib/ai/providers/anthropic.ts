@@ -1,0 +1,92 @@
+import Anthropic from "@anthropic-ai/sdk";
+
+import type {
+  AIProvider,
+  ChatRequest,
+  TextRequest,
+  VisionRequest,
+} from "@/lib/ai/provider";
+
+export class AnthropicProvider implements AIProvider {
+  readonly id = "anthropic";
+  readonly label = "Anthropic Claude";
+
+  private get apiKey(): string | undefined {
+    return process.env.ANTHROPIC_API_KEY;
+  }
+
+  private get model(): string {
+    return process.env.ANTHROPIC_MODEL || "claude-3-5-sonnet-latest";
+  }
+
+  isConfigured(): boolean {
+    return Boolean(this.apiKey);
+  }
+
+  supportsVision(): boolean {
+    return true;
+  }
+
+  private client(): Anthropic {
+    return new Anthropic({ apiKey: this.apiKey });
+  }
+
+  private extractText(message: Anthropic.Message): string {
+    return message.content
+      .filter((block): block is Anthropic.TextBlock => block.type === "text")
+      .map((block) => block.text)
+      .join("\n");
+  }
+
+  async completeText(request: TextRequest): Promise<string> {
+    const message = await this.client().messages.create({
+      model: this.model,
+      max_tokens: 4096,
+      temperature: request.temperature ?? 0.2,
+      system: request.system,
+      messages: [{ role: "user", content: request.prompt }],
+    });
+    return this.extractText(message);
+  }
+
+  async completeVision(request: VisionRequest): Promise<string> {
+    const message = await this.client().messages.create({
+      model: this.model,
+      max_tokens: 4096,
+      temperature: request.temperature ?? 0.2,
+      system: request.system,
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text: request.prompt },
+            {
+              type: "image",
+              source: {
+                type: "base64",
+                media_type: request.image
+                  .mimeType as "image/jpeg" | "image/png" | "image/gif" | "image/webp",
+                data: request.image.base64,
+              },
+            },
+          ],
+        },
+      ],
+    });
+    return this.extractText(message);
+  }
+
+  async chat(request: ChatRequest): Promise<string> {
+    const message = await this.client().messages.create({
+      model: this.model,
+      max_tokens: 2048,
+      temperature: request.temperature ?? 0.4,
+      system: request.system,
+      messages: request.messages.map((m) => ({
+        role: m.role,
+        content: m.content,
+      })),
+    });
+    return this.extractText(message);
+  }
+}
