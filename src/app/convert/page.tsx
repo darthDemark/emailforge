@@ -94,7 +94,7 @@ export default function ConvertPage() {
   }, [result]);
 
   return (
-    <div className="container max-w-6xl space-y-10 py-12">
+    <div className="container max-w-6xl space-y-12 py-16">
       <PageHeader
         eyebrow="Convert"
         title="Transform email designs into production-ready HTML"
@@ -179,7 +179,7 @@ export default function ConvertPage() {
       </div>
 
       {result ? (
-        <div className="space-y-8">
+        <div className="space-y-10">
           <div className="grid gap-6 lg:grid-cols-[auto_1fr]">
             <Card className="flex items-center justify-center border-brand/25 bg-brand-muted/60 p-6">
               <ScoreCard
@@ -222,7 +222,7 @@ export default function ConvertPage() {
             </Card>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-headline">Generated code</h2>
               <Button
@@ -249,13 +249,13 @@ export default function ConvertPage() {
           </div>
 
           {validation ? (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <AnalysisSummary
                 summary={validation.summary}
                 provider={validation.modelProvider}
                 usedAi={validation.usedAi}
               />
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <h2 className="text-headline">
                   Validation: {validation.issues.length} issue
                   {validation.issues.length === 1 ? "" : "s"}

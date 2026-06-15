@@ -61,7 +61,7 @@ export default function ValidatePage() {
   }, [html]);
 
   return (
-    <div className="container max-w-5xl space-y-10 py-12">
+    <div className="container max-w-5xl space-y-12 py-16">
       <PageHeader
         eyebrow="Validate"
         title="Analyze HTML email code before deployment"
@@ -153,14 +153,14 @@ export default function ValidatePage() {
       </div>
 
       {result ? (
-        <div className="space-y-6">
+        <div className="space-y-8">
           <AnalysisSummary
             summary={result.summary}
             provider={result.modelProvider}
             usedAi={result.usedAi}
           />
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             <h2 className="text-headline">
               {result.issues.length} issue
               {result.issues.length === 1 ? "" : "s"} detected

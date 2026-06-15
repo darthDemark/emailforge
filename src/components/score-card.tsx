@@ -20,15 +20,15 @@ function ringColor(score: number): string {
 }
 
 export function ScoreCard({ label, score, size = "lg", hint }: ScoreCardProps) {
-  const dimension = size === "lg" ? 132 : 88;
-  const stroke = size === "lg" ? 10 : 8;
+  const dimension = size === "lg" ? 156 : 92;
+  const stroke = size === "lg" ? 11 : 8;
   const radius = (dimension - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
   const clamped = Math.max(0, Math.min(100, score));
   const offset = circumference - (clamped / 100) * circumference;
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-4">
       <div
         className="relative"
         style={{ width: dimension, height: dimension }}
@@ -64,22 +64,31 @@ export function ScoreCard({ label, score, size = "lg", hint }: ScoreCardProps) {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span
             className={cn(
-              "font-bold tabular-nums",
-              size === "lg" ? "text-[34px]" : "text-[22px]",
+              "font-bold tabular-nums tracking-tight",
+              size === "lg" ? "text-[44px] leading-none" : "text-[24px]",
               scoreColor(clamped),
             )}
           >
             {Math.round(clamped)}
           </span>
           {size === "lg" ? (
-            <span className="text-xs text-muted-foreground">/ 100</span>
+            <span className="mt-0.5 text-xs font-medium text-muted-foreground">
+              / 100
+            </span>
           ) : null}
         </div>
       </div>
       <div className="text-center">
-        <p className="text-body font-semibold">{label}</p>
+        <p
+          className={cn(
+            "font-semibold",
+            size === "lg" ? "text-issue-title" : "text-body",
+          )}
+        >
+          {label}
+        </p>
         {hint ? (
-          <p className="text-xs text-muted-foreground">{hint}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p>
         ) : null}
       </div>
     </div>

@@ -63,7 +63,7 @@ export default function VisionPage() {
   );
 
   return (
-    <div className="container max-w-6xl space-y-10 py-12">
+    <div className="container max-w-6xl space-y-12 py-16">
       <PageHeader
         eyebrow="Vision"
         title="Analyze email designs before development"
@@ -140,7 +140,7 @@ export default function VisionPage() {
       </div>
 
       {result ? (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {result.components.length > 0 ? (
             <Card className="border-brand/25 bg-brand-muted/60">
               <CardHeader>
@@ -172,7 +172,7 @@ export default function VisionPage() {
             usedAi={result.usedAi}
           />
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             <h2 className="text-headline">
               {result.issues.length} design issue
               {result.issues.length === 1 ? "" : "s"}

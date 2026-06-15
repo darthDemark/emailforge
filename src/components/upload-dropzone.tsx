@@ -47,7 +47,7 @@ export function UploadDropzone({
 
   if (previewUrl) {
     return (
-      <div className="rounded-xl border border-border bg-card p-3">
+      <div className="rounded-3xl border border-border bg-card p-3 shadow-card">
         <div className="flex items-center justify-between px-1 pb-2">
           <span className="flex items-center gap-2 text-body text-muted-foreground">
             <ImageIcon className="h-4 w-4" aria-hidden="true" />
@@ -91,13 +91,13 @@ export function UploadDropzone({
           handleFile(e.dataTransfer.files?.[0]);
         }}
         className={cn(
-          "flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-border bg-card px-6 py-14 text-center transition-colors hover:border-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-          dragging && "border-foreground/50 bg-muted/50",
+          "flex w-full flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-border bg-card px-6 py-16 text-center shadow-card transition-colors hover:border-brand/40 hover:bg-brand-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          dragging && "border-brand/60 bg-brand-muted/60",
         )}
         aria-label="Upload an email design image"
       >
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-          <UploadCloud className="h-6 w-6 text-muted-foreground" aria-hidden="true" />
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-muted">
+          <UploadCloud className="h-6 w-6 text-brand" aria-hidden="true" />
         </span>
         <span className="text-semi-header">Drag and drop your design</span>
         <span className="text-body text-muted-foreground">

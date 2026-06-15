@@ -8,7 +8,7 @@ export function NavigationCard({ item }: { item: NavItem }) {
   return (
     <Link
       href={item.href}
-      className="group flex flex-col gap-4 rounded-xl border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="group flex flex-col gap-4 rounded-3xl border border-border bg-card p-7 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <div className="flex items-center justify-between">
         <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-secondary">
@@ -19,7 +19,7 @@ export function NavigationCard({ item }: { item: NavItem }) {
         </span>
       </div>
       <div className="space-y-1">
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
           {item.tagline}
         </p>
         <h3 className="text-headline">{item.label}</h3>

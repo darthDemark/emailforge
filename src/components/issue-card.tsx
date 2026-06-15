@@ -36,7 +36,7 @@ export function IssueCard({
     <div
       id={id}
       className={cn(
-        "relative overflow-hidden rounded-xl border border-border bg-card pl-1 transition-shadow",
+        "relative overflow-hidden rounded-2xl border border-border bg-card pl-1 shadow-card transition-shadow hover:shadow-card-hover",
         "before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:content-['']",
         SEVERITY_ACCENT[issue.severity],
       )}

@@ -51,7 +51,7 @@ export function CodeViewer({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-xl border border-border bg-muted/40",
+        "overflow-hidden rounded-2xl border border-border bg-muted/40 shadow-card",
         className,
       )}
     >

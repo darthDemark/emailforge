@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { SectionLabel } from "@/components/section-label";
 
 interface PageHeaderProps {
   eyebrow: string;
@@ -16,15 +17,13 @@ export function PageHeader({
   children,
 }: PageHeaderProps) {
   return (
-    <div className={cn("flex flex-col gap-4", className)}>
-      <span className="text-body font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-        {eyebrow}
-      </span>
-      <h1 className="max-w-3xl text-balance text-[32px] font-bold leading-tight tracking-tight sm:text-page-title">
+    <div className={cn("flex flex-col gap-5", className)}>
+      <SectionLabel>{eyebrow}</SectionLabel>
+      <h1 className="max-w-3xl text-balance text-[34px] font-bold leading-[1.08] tracking-tight sm:text-page-title">
         {title}
       </h1>
       {description ? (
-        <p className="max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
+        <p className="max-w-2xl text-[17px] leading-relaxed text-muted-foreground">
           {description}
         </p>
       ) : null}

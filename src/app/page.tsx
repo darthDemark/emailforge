@@ -3,6 +3,7 @@ import { ArrowRight, Cpu, Sparkles, CheckCircle2 } from "lucide-react";
 
 import { NAV_ITEMS } from "@/lib/navigation";
 import { NavigationCard } from "@/components/navigation-card";
+import { SectionLabel } from "@/components/section-label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ruleCount } from "@/lib/rule-engine";
@@ -20,8 +21,8 @@ export default function HomePage() {
   const configured = providers.filter((p) => p.configured);
 
   return (
-    <div className="container space-y-24 py-16 sm:py-24">
-      <section className="flex flex-col items-center gap-8 text-center">
+    <div className="container space-y-28 py-20 sm:py-28">
+      <section className="mx-auto flex max-w-4xl flex-col items-center gap-7 text-center">
         <Badge variant="secondary" className="gap-1.5 px-3 py-1">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
@@ -32,16 +33,15 @@ export default function HomePage() {
             : "Deterministic engine online · add an AI key to enable AI layer"}
         </Badge>
 
-        <h1 className="max-w-4xl text-balance text-[40px] font-bold leading-[1.05] tracking-tight sm:text-[64px]">
+        <h1 className="max-w-4xl text-balance text-[40px] font-bold leading-[1.04] tracking-tight sm:text-[64px]">
           AI-powered HTML email development platform
         </h1>
-        <p className="max-w-2xl text-balance text-[17px] leading-relaxed text-muted-foreground">
-          EmailForge combines a deterministic email rule engine with an AI
-          analysis, optimization and education layer. Create, analyze, optimize
-          and validate HTML emails with accuracy you can trust.
+        <p className="max-w-xl text-balance text-[18px] leading-relaxed text-muted-foreground">
+          From design to deployment. Everything you need to analyze, build, and
+          validate HTML emails in one workflow.
         </p>
 
-        <div className="flex flex-col items-center gap-3 sm:flex-row">
+        <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
           <Button asChild size="lg">
             <Link href="/vision">
               Start with Vision
@@ -53,7 +53,7 @@ export default function HomePage() {
           </Button>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-body text-muted-foreground">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-body text-muted-foreground">
           <span className="flex items-center gap-2">
             <Cpu className="h-4 w-4" aria-hidden="true" />
             {rules}+ deterministic rules
@@ -69,11 +69,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-8">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <span className="text-body font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            The workflow
-          </span>
+      <section className="space-y-10">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <SectionLabel>The workflow</SectionLabel>
           <h2 className="text-headline sm:text-[32px]">
             Vision → Convert → Validate
           </h2>
@@ -85,11 +83,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-8">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <span className="text-body font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Not a generic AI wrapper
-          </span>
+      <section className="space-y-10">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <SectionLabel>Not a generic AI wrapper</SectionLabel>
           <h2 className="text-headline sm:text-[32px]">
             Deterministic accuracy, AI explanation
           </h2>
@@ -104,10 +100,10 @@ export default function HomePage() {
           {ALL_CATEGORIES.map((category) => (
             <div
               key={category}
-              className="rounded-xl border border-border bg-card p-5"
+              className="rounded-3xl border border-border bg-card p-6 shadow-card transition-shadow hover:shadow-card-hover"
             >
               <h3 className="text-issue-title">{CATEGORY_LABELS[category]}</h3>
-              <p className="mt-1 text-body text-muted-foreground">
+              <p className="mt-1.5 text-body text-muted-foreground">
                 Evaluated against established HTML email best practices.
               </p>
             </div>

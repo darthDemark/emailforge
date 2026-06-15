@@ -78,10 +78,15 @@ const config: Config = {
         success: "hsl(var(--success))",
         brand: {
           DEFAULT: "hsl(var(--brand))",
+          hover: "hsl(var(--brand-hover))",
           foreground: "hsl(var(--brand-foreground))",
           muted: "hsl(var(--brand-muted))",
           subtle: "hsl(var(--brand-subtle))",
         },
+      },
+      boxShadow: {
+        card: "0 2px 12px rgba(28, 28, 28, 0.04)",
+        "card-hover": "0 8px 24px rgba(28, 28, 28, 0.08)",
       },
       borderRadius: {
         lg: "var(--radius)",

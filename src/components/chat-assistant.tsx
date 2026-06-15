@@ -83,7 +83,7 @@ export function ChatAssistant() {
       <Button
         onClick={() => setOpen((v) => !v)}
         size="lg"
-        className="fixed bottom-6 right-6 z-50 rounded-full bg-brand text-brand-foreground shadow-lg hover:bg-brand/90"
+        className="fixed bottom-6 right-6 z-50 rounded-full shadow-card-hover"
         aria-label={open ? "Close EmailForge assistant" : "Open EmailForge assistant"}
         aria-expanded={open}
       >
