@@ -16,6 +16,8 @@ logo, header, hero, headline, body-copy, cta, product-grid, promotional-block, s
 Step 2 - Issue detection. Evaluate the design against HTML email best practices. Look specifically for:
 text embedded in images, poor contrast, weak visual hierarchy, small CTA buttons, accessibility problems, image-heavy design, mobile layout risks, Outlook rendering risks, dark-mode risks, deliverability risks, multiple competing CTAs, CTA below the fold, insufficient spacing, readability problems.
 
+Report the 8-10 MOST important issues only. Keep "impact", "recommendation" and "bestPractice" to one or two concise sentences each so the response is fast.
+
 For EACH issue also include a "marker" object with normalized coordinates (x and y between 0 and 1) locating the problem area on the image, so it can be annotated.
 
 Return STRICT JSON with this shape:
@@ -79,7 +81,7 @@ export async function analyzeDesign(
       json: true,
       image: { base64: imageBase64, mimeType },
     }),
-    100_000,
+    110_000,
   );
 
   const parsed = parseJsonResponse<VisionPayload>(raw);

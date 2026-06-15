@@ -51,26 +51,30 @@ export class OpenAIProvider implements AIProvider {
   }
 
   async completeVision(request: VisionRequest): Promise<string> {
-    const res = await this.client().chat.completions.create({
-      model: this.visionModel,
-      temperature: request.temperature ?? 0.2,
-      response_format: request.json ? { type: "json_object" } : undefined,
-      messages: [
-        { role: "system", content: request.system },
-        {
-          role: "user",
-          content: [
-            { type: "text", text: request.prompt },
-            {
-              type: "image_url",
-              image_url: {
-                url: `data:${request.image.mimeType};base64,${request.image.base64}`,
+    // Vision is the slowest path; give it one long, un-retried attempt.
+    const res = await this.client().chat.completions.create(
+      {
+        model: this.visionModel,
+        temperature: request.temperature ?? 0.2,
+        response_format: request.json ? { type: "json_object" } : undefined,
+        messages: [
+          { role: "system", content: request.system },
+          {
+            role: "user",
+            content: [
+              { type: "text", text: request.prompt },
+              {
+                type: "image_url",
+                image_url: {
+                  url: `data:${request.image.mimeType};base64,${request.image.base64}`,
+                },
               },
-            },
-          ],
-        },
-      ],
-    });
+            ],
+          },
+        ],
+      },
+      { timeout: 115_000, maxRetries: 0 },
+    );
     return res.choices[0]?.message?.content ?? "";
   }
 

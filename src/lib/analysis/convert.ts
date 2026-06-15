@@ -119,7 +119,7 @@ Respond with STRICT JSON only:
         image: { base64: imageBase64, mimeType },
         temperature: 0.3,
       }),
-      100_000,
+      110_000,
     );
 
     const parsed = parseJsonResponse<{
