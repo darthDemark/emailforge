@@ -16,7 +16,15 @@ export class AnthropicProvider implements AIProvider {
   }
 
   private get model(): string {
-    return process.env.ANTHROPIC_MODEL || "claude-3-5-sonnet-latest";
+    return process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
+  }
+
+  private get visionModel(): string {
+    return (
+      process.env.ANTHROPIC_VISION_MODEL ||
+      process.env.ANTHROPIC_MODEL ||
+      "claude-sonnet-4-6"
+    );
   }
 
   isConfigured(): boolean {
@@ -51,7 +59,7 @@ export class AnthropicProvider implements AIProvider {
 
   async completeVision(request: VisionRequest): Promise<string> {
     const message = await this.client().messages.create({
-      model: this.model,
+      model: this.visionModel,
       max_tokens: 4096,
       temperature: request.temperature ?? 0.2,
       system: request.system,
