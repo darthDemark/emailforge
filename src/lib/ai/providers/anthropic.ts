@@ -20,10 +20,12 @@ export class AnthropicProvider implements AIProvider {
   }
 
   private get visionModel(): string {
+    // Default vision to the faster Haiku model so image analysis (the slowest
+    // path) completes well within serverless limits. Override with
+    // ANTHROPIC_VISION_MODEL to trade speed for depth (e.g. claude-sonnet-4-6).
     return (
       process.env.ANTHROPIC_VISION_MODEL ||
-      process.env.ANTHROPIC_MODEL ||
-      "claude-sonnet-4-6"
+      "claude-haiku-4-5"
     );
   }
 
