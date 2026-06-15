@@ -32,7 +32,9 @@ export class OpenAIProvider implements AIProvider {
   }
 
   private client(): OpenAI {
-    return new OpenAI({ apiKey: this.apiKey });
+    // Bound request time and limit retries so a slow/unavailable upstream
+    // fails fast instead of hanging past the serverless function limit.
+    return new OpenAI({ apiKey: this.apiKey, timeout: 50_000, maxRetries: 1 });
   }
 
   async completeText(request: TextRequest): Promise<string> {

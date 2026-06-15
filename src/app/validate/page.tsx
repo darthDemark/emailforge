@@ -16,6 +16,7 @@ import { SAMPLE_EMAIL } from "@/lib/sample-email";
 export default function ValidatePage() {
   const [html, setHtml] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [enhancing, setEnhancing] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [result, setResult] = React.useState<ValidateResult | null>(null);
 
@@ -41,6 +42,9 @@ export default function ValidatePage() {
     setError(null);
     setLoading(true);
     setResult(null);
+
+    // Phase 1 — deterministic rule engine. Fast and reliable; this is the
+    // primary result and never depends on the AI provider.
     try {
       const res = await fetch("/api/validate", {
         method: "POST",
@@ -50,13 +54,35 @@ export default function ValidatePage() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error ?? "Validation failed.");
-      } else {
-        setResult(data as ValidateResult);
+        setLoading(false);
+        return;
       }
+      setResult(data as ValidateResult);
     } catch {
       setError("Network error. Please try again.");
-    } finally {
       setLoading(false);
+      return;
+    }
+    setLoading(false);
+
+    // Phase 2 — AI enhancement. Runs as a separate, non-blocking request that
+    // explains and expands the findings. If it is slow or fails, the rule
+    // engine report above still stands.
+    setEnhancing(true);
+    try {
+      const res = await fetch("/api/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ html, enhance: true }),
+      });
+      if (res.ok) {
+        const data = (await res.json()) as ValidateResult;
+        if (data.usedAi) setResult(data);
+      }
+    } catch {
+      // AI enhancement is supplementary; keep the rule-engine results.
+    } finally {
+      setEnhancing(false);
     }
   }, [html]);
 
@@ -159,6 +185,16 @@ export default function ValidatePage() {
             provider={result.modelProvider}
             usedAi={result.usedAi}
           />
+
+          {enhancing ? (
+            <div
+              role="status"
+              className="flex items-center gap-2 rounded-2xl border border-border bg-brand-muted/50 px-4 py-3 text-body text-muted-foreground"
+            >
+              <Loader2 className="h-4 w-4 animate-spin text-brand" aria-hidden="true" />
+              Enhancing findings with AI analysis…
+            </div>
+          ) : null}
 
           <div className="space-y-4">
             <h2 className="text-headline">

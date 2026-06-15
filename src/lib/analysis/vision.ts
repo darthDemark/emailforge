@@ -1,5 +1,6 @@
 import { resolveProvider, parseJsonResponse } from "@/lib/ai";
 import { summarize } from "@/lib/rule-engine";
+import { withTimeout } from "@/lib/timeout";
 import type { EmailIssue, VisionResult } from "@/lib/types";
 import { GLOBAL_AI_DIRECTIVE } from "@/lib/analysis/prompts";
 import {
@@ -71,12 +72,15 @@ export async function analyzeDesign(
     return noAiResult();
   }
 
-  const raw = await provider.completeVision({
-    system: GLOBAL_AI_DIRECTIVE,
-    prompt: VISION_PROMPT,
-    json: true,
-    image: { base64: imageBase64, mimeType },
-  });
+  const raw = await withTimeout(
+    provider.completeVision({
+      system: GLOBAL_AI_DIRECTIVE,
+      prompt: VISION_PROMPT,
+      json: true,
+      image: { base64: imageBase64, mimeType },
+    }),
+    100_000,
+  );
 
   const parsed = parseJsonResponse<VisionPayload>(raw);
   const components = normalizeComponents(parsed?.components ?? parsed);

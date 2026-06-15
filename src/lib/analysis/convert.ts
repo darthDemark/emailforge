@@ -7,6 +7,7 @@ import type {
 } from "@/lib/types";
 import { CONVERT_OUTPUT_MODES } from "@/lib/types";
 import { clamp } from "@/lib/utils";
+import { withTimeout } from "@/lib/timeout";
 import { buildStarterEmail } from "@/lib/analysis/template";
 import {
   normalizeComponents,
@@ -110,13 +111,16 @@ Respond with STRICT JSON only:
 }`;
 
   try {
-    const raw = await provider.completeVision({
-      system,
-      prompt: `Convert this email design into ${modeLabel} code following every requirement. Improve the design where it violates best practices and report each improvement in "optimizations".`,
-      json: true,
-      image: { base64: imageBase64, mimeType },
-      temperature: 0.3,
-    });
+    const raw = await withTimeout(
+      provider.completeVision({
+        system,
+        prompt: `Convert this email design into ${modeLabel} code following every requirement. Improve the design where it violates best practices and report each improvement in "optimizations".`,
+        json: true,
+        image: { base64: imageBase64, mimeType },
+        temperature: 0.3,
+      }),
+      100_000,
+    );
 
     const parsed = parseJsonResponse<{
       html?: string;

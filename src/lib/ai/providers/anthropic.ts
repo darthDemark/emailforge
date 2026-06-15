@@ -36,7 +36,13 @@ export class AnthropicProvider implements AIProvider {
   }
 
   private client(): Anthropic {
-    return new Anthropic({ apiKey: this.apiKey });
+    // Bound request time and limit retries so a slow/unavailable upstream
+    // fails fast instead of hanging past the serverless function limit.
+    return new Anthropic({
+      apiKey: this.apiKey,
+      timeout: 50_000,
+      maxRetries: 1,
+    });
   }
 
   private extractText(message: Anthropic.Message): string {

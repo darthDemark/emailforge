@@ -2,13 +2,17 @@ import { NextResponse } from "next/server";
 
 import { validateHtml } from "@/lib/analysis/validate";
 import { persistAnalysis } from "@/lib/supabase";
+import { describeError, redactSecrets } from "@/lib/errors";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { html?: string };
+    const body = (await request.json()) as {
+      html?: string;
+      enhance?: boolean;
+    };
     const html = (body.html ?? "").trim();
 
     if (!html) {
@@ -24,7 +28,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await validateHtml(html);
+    const result = await validateHtml(html, { enhanceWithAi: body.enhance });
     void persistAnalysis({
       kind: "validate",
       provider: result.modelProvider,
@@ -32,9 +36,11 @@ export async function POST(request: Request) {
       payload: result.summary,
     });
     return NextResponse.json(result);
-  } catch {
+  } catch (err) {
+    const detail = redactSecrets(describeError(err));
+    console.error("[api/validate] failed:", detail);
     return NextResponse.json(
-      { error: "Failed to validate HTML." },
+      { error: `Failed to validate HTML: ${detail}` },
       { status: 500 },
     );
   }
